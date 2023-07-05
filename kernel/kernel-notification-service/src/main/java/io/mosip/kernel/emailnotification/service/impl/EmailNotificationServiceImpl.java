@@ -94,7 +94,10 @@ public class EmailNotificationServiceImpl implements EmailNotification<Multipart
 			MultipartFile[] attachments) {
 		ResponseDto dto = new ResponseDto();
 		LOGGER.info("To Request : " + String.join(",", mailTo));
+		LOGGER.info("Template Code : " + String.join(",", templateTypeCode));
+		LOGGER.info("Proxy : " + isProxytrue);
 
+		
 		try {
 			if(templateTypeCode != null) {
 				Map<String, Object> attributes = new LinkedHashMap<>();
@@ -108,6 +111,8 @@ public class EmailNotificationServiceImpl implements EmailNotification<Multipart
 			e.printStackTrace();
 		}
 
+		LOGGER.info("Mail Content : " + mailContent);
+		LOGGER.info("Mail To : " + mailTo);
 		if(!isProxytrue) {
 			send(mailTo, mailCc, mailSubject, mailContent, attachments);
 		}
