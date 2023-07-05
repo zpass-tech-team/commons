@@ -96,7 +96,9 @@ public class EmailNotificationServiceImpl implements EmailNotification<Multipart
 		LOGGER.info("To Request : " + String.join(",", mailTo));
 		LOGGER.info("Template Code : " + String.join(",", templateTypeCode));
 		LOGGER.info("Proxy : " + isProxytrue);
-
+		LOGGER.info("Mail Subject : " + String.join(",", mailSubject));
+		LOGGER.info("Mail Content : " + String.join(",", mailContent));
+		LOGGER.info("Attachment : " +  (attachments != null));
 		
 		try {
 			if(templateTypeCode != null) {
@@ -111,9 +113,9 @@ public class EmailNotificationServiceImpl implements EmailNotification<Multipart
 			e.printStackTrace();
 		}
 
-		LOGGER.info("Mail Content : " + mailContent);
-		LOGGER.info("Mail To : " + mailTo);
+		LOGGER.info("Mail Content 2 : " + mailContent);
 		if(!isProxytrue) {
+			LOGGER.info("Sending Mail to Email");
 			send(mailTo, mailCc, mailSubject, mailContent, attachments);
 		}
 
