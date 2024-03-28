@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<version>1.2.0.1-B1</version>
+	<version>1.2.0.1</version>
 	<groupId>io.mosip.kernel</groupId>
 	<artifactId>kernel-parent</artifactId>
 	<packaging>pom</packaging>
@@ -53,21 +53,21 @@
 		<module>kernel-pdfgenerator-itext</module>
 		<module>kernel-datamapper-orika</module>
 		<module>kernel-qrcodegenerator-zxing</module>
-		<module>kernel-cbeffutil-api</module>
 		<module>kernel-transliteration-icu4j</module>
 		<module>kernel-applicanttype-api</module>
 		<module>kernel-idobjectvalidator</module>
-		<!-- <module>kernel-bioapi-provider</module> -->
-		<module>kernel-authcodeflowproxy-api</module>
+		<!-- 
+		Depricated or Moved out of commons
+		<module>kernel-biometrics-api</module>
+		<module>kernel-bioapi-provider</module> 
+		<module>kernel-authcodeflowproxy-api</module> -->
 		<module>kernel-websubclient-api</module>
-		<module>kernel-otpmanager-service</module>
+		<!-- <module>kernel-otpmanager-service</module> -->
 		<module>kernel-notification-service</module>
 		<module>kernel-ridgenerator-service</module>
 		<module>kernel-idgenerator-service</module>
 		<module>kernel-pridgenerator-service</module>
 		<module>kernel-salt-generator</module>
-		<module>kernel-biometrics-api</module>
-		<module>kernel-biosdk-provider</module>
 		<module>kernel-demographics-api</module>
 	</modules>
 

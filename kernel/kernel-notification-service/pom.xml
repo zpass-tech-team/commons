@@ -8,7 +8,7 @@
 	<name>kernel-notification-service</name>
 	<description>Mosip commons project </description>
 	<url>https://github.com/mosip/commons</url>
-	<version>1.2.0.1-B1</version>
+	<version>1.2.0.1</version>
 	<groupId>io.mosip.kernel</groupId>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -221,11 +221,10 @@
 		<aspectjweaver.version>1.8.12</aspectjweaver.version>
 		<micrometer.core.version>1.4.2</micrometer.core.version>
 		<micrometer.registry.prometheus.version>1.4.2</micrometer.registry.prometheus.version>
-		<kernel.core.version>1.2.0.1-B1</kernel.core.version>
-		<kernel.auth-adapter.version>1.2.0.1-B1</kernel.auth-adapter.version>
-		<kernel.applicant-type.version>1.2.0.1-B1</kernel.applicant-type.version>
-		<kernel.dataaccess-hibernate.version>1.2.0.1-B1</kernel.dataaccess-hibernate.version>
-		<kernel.logger.version>1.2.0.1-B1</kernel.logger.version>
+		<kernel.core.version>1.2.0.1</kernel.core.version>
+		<kernel.applicant-type.version>1.2.0.1</kernel.applicant-type.version>
+		<kernel.dataaccess-hibernate.version>1.2.0.1</kernel.dataaccess-hibernate.version>
+		<kernel.logger.version>1.2.0.1</kernel.logger.version>
 		<jacoco.maven.plugin.version>0.8.5</jacoco.maven.plugin.version>
 		<springdoc.version>1.5.10</springdoc.version>
 		<kernel.templatemanager.velocity.version>1.2.0.1-B1</kernel.templatemanager.velocity.version>
@@ -509,12 +508,20 @@
 				<dependency>
 					<groupId>io.mosip.kernel</groupId>
 					<artifactId>kernel-auth-adapter</artifactId>
-					<version>${project.version}</version>
+					<!--	Below version is only used for openapi-doc-generate-profile to generate api-docs.
+					    	It will be required only when running the below command
+						mvn clean verify -Dgpg.skip -DskipTests -Dmaven.javadoc.skip -P openapi-doc-generate-profile
+						Note:- It is not required to have the latest version of auth adapter.-->
+					<version>v1.2.0.1-B2</version>  <!-- Updating to last released version to remove circular dependency in release -->
 				</dependency>
 				<dependency>
 					<groupId>io.mosip.kernel</groupId>
+					<!--	Below version is only used for openapi-doc-generate-profile to generate api-docs.
+					    	It will be required only when running the below command
+						mvn clean verify -Dgpg.skip -DskipTests -Dmaven.javadoc.skip -P openapi-doc-generate-profile
+						Note:- It is not required to have the latest version of kernel-smsserviceprovider-msg91.-->
 					<artifactId>kernel-smsserviceprovider-msg91</artifactId>
-					<version>1.2.0.1-B1-rc1</version>
+					<version>1.2.0.1</version>
 				</dependency>
 			</dependencies>
 			<build>
