@@ -3,6 +3,12 @@ package io.mosip.kernel.emailnotification.service.impl;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import io.mosip.kernel.core.templatemanager.spi.TemplateManager;
+import io.mosip.kernel.emailnotification.constant.ApiName;
+import io.mosip.kernel.emailnotification.exception.ApisResourceAccessException;
+import io.mosip.kernel.emailnotification.util.HTMLFormatter;
+import io.mosip.kernel.emailnotification.util.TemplateGenerator;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +25,11 @@ import io.mosip.kernel.emailnotification.constant.MailNotifierConstants;
 import io.mosip.kernel.emailnotification.dto.ResponseDto;
 import io.mosip.kernel.emailnotification.exception.NotificationException;
 import io.mosip.kernel.emailnotification.util.EmailNotificationUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Service implementation class for {@link EmailNotification}.
@@ -51,10 +62,18 @@ public class EmailNotificationServiceImpl implements EmailNotification<Multipart
 	
 	@Value("${mosip.kernel.mail.proxy-mail:false}")
 	private boolean isProxytrue;
-	
+
 	@Value("${mosip.kernel.mail.content.html.enable:true}")
 	private boolean isHtmlEnable;
 
+	@Value("${mosip.kernel.mail.content.template.code:#{null}}")
+	private String templateTypeCode;
+
+	@Autowired
+	TemplateGenerator templateGenerator;
+
+	@Autowired
+	HTMLFormatter htmlFormatter;
 	/**
 	 * SendEmail
 	 * 
@@ -75,9 +94,31 @@ public class EmailNotificationServiceImpl implements EmailNotification<Multipart
 			MultipartFile[] attachments) {
 		ResponseDto dto = new ResponseDto();
 		LOGGER.info("To Request : " + String.join(",", mailTo));
-		if(!isProxytrue) {
-		send(mailTo, mailCc, mailSubject, mailContent, attachments);
+		LOGGER.info("Template Code : " + String.join(",", templateTypeCode));
+		LOGGER.info("Proxy : " + isProxytrue);
+		LOGGER.info("Mail Subject : " + String.join(",", mailSubject));
+		LOGGER.info("Mail Content : " + String.join(",", mailContent));
+		LOGGER.info("Attachment : " +  (attachments != null));
+		
+		try {
+			if(templateTypeCode != null) {
+				Map<String, Object> attributes = new LinkedHashMap<>();
+				attributes.put("mailContent",htmlFormatter.formatText(mailContent));
+				InputStream stream = templateGenerator.getTemplate(templateTypeCode, attributes, MailNotifierConstants.LANGUAGE.getValue());
+				mailContent = IOUtils.toString(stream, "UTF-8");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ApisResourceAccessException e) {
+			e.printStackTrace();
 		}
+
+		LOGGER.info("Mail Content 2 : " + mailContent);
+		if(!isProxytrue) {
+			LOGGER.info("Sending Mail to Email");
+			send(mailTo, mailCc, mailSubject, mailContent, attachments);
+		}
+
 		dto.setStatus(MailNotifierConstants.MESSAGE_SUCCESS_STATUS.getValue());
 		dto.setMessage(MailNotifierConstants.MESSAGE_REQUEST_SENT.getValue());
 		return dto;
