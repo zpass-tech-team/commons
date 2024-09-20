@@ -162,7 +162,9 @@ public class UinServiceHealthCheckerhandler implements HealthCheckHandler {
 						.add(UINHealthConstants.RESPONSE, response.result().body()).build();
 				future.complete(Status.OK(result));
 			} else {
-				future.complete(Status.KO());
+				if (!future.isComplete()) {
+					future.complete(Status.KO());
+				}
 			}
 		});
 	}
