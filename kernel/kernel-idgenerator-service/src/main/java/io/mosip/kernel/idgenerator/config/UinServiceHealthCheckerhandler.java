@@ -77,6 +77,7 @@ public class UinServiceHealthCheckerhandler implements HealthCheckHandler {
 		this.password = environment.getProperty(HibernatePersistenceConstant.JAVAX_PERSISTENCE_JDBC_PASS);
 		this.currentWorkingDirPath = new File(System.getProperty(UinGeneratorConstant.CURRENT_WORKING_DIRECTORY));
 		this.resultBuilder = new UinServiceHealthCheckerhandler.JSONResultBuilder();
+		System.setProperty("vertx.logger-delegate-factory-class-name", "io.vertx.core.logging.SLF4JLogDelegateFactory");
 	}
 
 	@Override
