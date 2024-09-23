@@ -121,8 +121,8 @@ public class UinServiceRouter {
 		router.get(servletPath + UinGeneratorConstant.HEALTH_ENDPOINT).handler(healthCheckHandler);
 		healthCheckHandler.register("db", healthCheckHandler::databaseHealthChecker);
 		healthCheckHandler.register("diskspace", healthCheckHandler::dispSpaceHealthChecker);
-		healthCheckHandler.register("uingeneratorverticle",
-				future -> healthCheckHandler.verticleHealthHandler(future, vertx));
+//		healthCheckHandler.register("uingeneratorverticle",
+//				future -> healthCheckHandler.verticleHealthHandler(future, vertx));
 	}
 
 	private void getRouter(Vertx vertx, RoutingContext routingContext, boolean isSignEnable, String profile,
