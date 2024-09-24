@@ -74,7 +74,7 @@ public class HttpServerVerticle extends AbstractVerticle {
 				.handler(healthCheckHandler);
 		healthCheckHandler.register("db", healthCheckHandler::databaseHealthChecker);
 		healthCheckHandler.register("diskspace", healthCheckHandler::dispSpaceHealthChecker);
-		healthCheckHandler.register("idgenerator", f -> healthCheckHandler.verticleHealthHandler(f, vertx));
+//		healthCheckHandler.register("idgenerator", f -> healthCheckHandler.verticleHealthHandler(f, vertx));
 
 		metricRouter.route("/metrics").handler(PrometheusScrapingHandler.create());
 

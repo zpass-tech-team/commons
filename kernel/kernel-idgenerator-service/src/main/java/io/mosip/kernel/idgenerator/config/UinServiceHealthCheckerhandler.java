@@ -160,9 +160,13 @@ public class UinServiceHealthCheckerhandler implements HealthCheckHandler {
 			if (response.succeeded()) {
 				final JsonObject result = resultBuilder.create()
 						.add(UINHealthConstants.RESPONSE, response.result().body()).build();
-				future.complete(Status.OK(result));
+				if (!future.isComplete()) {
+					future.complete(Status.OK(result));
+				}
 			} else {
-				future.complete(Status.KO());
+				if (!future.isComplete()) {
+					future.complete(Status.KO());
+				}
 			}
 		});
 	}
